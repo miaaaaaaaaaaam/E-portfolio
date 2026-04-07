@@ -357,6 +357,81 @@ section + section { border-top: 1px solid var(--border); }
   cursor: pointer;
 }
 
+.formation-list { display: grid; gap: 1rem; }
+.cert-open-card {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+.cert-open-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.certification-grid { margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+.cert-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.cert-card:hover {
+  border-color: rgba(59,130,246,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59,130,246,0.12);
+}
+.cert-card-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+.cert-card-meta { font-size: 0.75rem; color: var(--muted); font-family: var(--font-mono); }
+
+/* Fenêtre de prévisualisation de certification */
+.cert-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 8, 18, 0.84);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 1rem;
+}
+.cert-modal.open { display: flex; }
+.cert-modal-content {
+  position: relative;
+  background: #0b1322;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem;
+  width: min(950px, 100%);
+}
+.cert-modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+.cert-modal-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(8,12,20,0.9);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
 /* INTÉRÊTS */
 .int-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; }
 .interest-tag { font-family: var(--font-mono); font-size: 0.76rem; padding: 0.5rem 1.1rem; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); transition: all 0.2s; cursor: default; }
@@ -616,7 +691,6 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
         </button>
       </div>
     </div>
-  </div>
 </section>
 
 <div id="cert-modal" class="cert-modal" aria-hidden="true">
@@ -624,6 +698,9 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
     <button id="cert-close-btn" class="cert-modal-close" type="button" aria-label="Fermer">×</button>
     <!-- Placez ici votre image de certification -->
     <img src="./certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
+
+    <img src="images/certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
+
   </div>
 </div>
 
@@ -732,7 +809,7 @@ function renderGrid() {
 
   // Si le tableau est vide → message d'état vide
   if (customSkills.length === 0) {
-    grid.innerHTML = '<div class="empty-state">Aucune compétence ajoutée. Utilisez le formulaire ci-dessous ✨</div>';
+    grid.innerHTML = '<div class="empty-state">Aucune compétence ajoutée. Utilisez le formulaire ci-dessous </div>';
     return;
   }
 
@@ -794,8 +871,8 @@ function resetForm() {
   inputCategory.value      = 'Réseau';
   inputLevel.value         = 50;
   levelDisplay.textContent = '50%';
-  formTitle.textContent    = '➕ Ajouter une compétence';
-  btnLabel.textContent     = '➕ Ajouter';
+  formTitle.textContent    = ' Ajouter une compétence';
+  btnLabel.textContent     = ' Ajouter';
   btnCancel.style.display  = 'none';
   editingId                = null;
 }
