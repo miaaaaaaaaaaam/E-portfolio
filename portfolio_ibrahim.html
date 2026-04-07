@@ -301,6 +301,61 @@ section + section { border-top: 1px solid var(--border); }
 .form-title  { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
 .form-school { font-size: 0.83rem; color: var(--accent); margin-bottom: 0.3rem; font-family: var(--font-mono); }
 .form-desc   { font-size: 0.83rem; color: var(--muted); }
+.formation-list { display: grid; gap: 1rem; }
+.cert-open-card {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+.cert-open-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+/* Fenêtre de prévisualisation de certification */
+.cert-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 8, 18, 0.84);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 1rem;
+}
+.cert-modal.open { display: flex; }
+.cert-modal-content {
+  position: relative;
+  background: #0b1322;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem;
+  width: min(950px, 100%);
+}
+.cert-modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+.cert-modal-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(8,12,20,0.9);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
 
 .formation-list { display: grid; gap: 1rem; }
 .cert-open-card {
@@ -418,7 +473,7 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
       <div class="contact-item"><i class="icon">✉️</i><span>ibrahim.abdelaziz@limayrac.fr</span></div>
     </div>
     <div class="hero-cta fade-up">
-      <a href="mailto:ibrahim.abdelaziz@limayrac.fr" class="btn btn-primary">✉ Me contacter</a>
+      <a href="https://www.linkedin.com/in/ibrahim-abdelaziz-4a5a1839a/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">in LinkedIn</a>
       <a href="#experience" class="btn btn-outline">→ Voir mes expériences</a>
     </div>
   </div>
@@ -643,7 +698,9 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
     <button id="cert-close-btn" class="cert-modal-close" type="button" aria-label="Fermer">×</button>
     <!-- Placez ici votre image de certification -->
     <img src="./certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
+
     <img src="images/certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
+
   </div>
 </div>
 
