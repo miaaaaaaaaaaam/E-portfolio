@@ -301,6 +301,24 @@ section + section { border-top: 1px solid var(--border); }
 .form-title  { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
 .form-school { font-size: 0.83rem; color: var(--accent); margin-bottom: 0.3rem; font-family: var(--font-mono); }
 .form-desc   { font-size: 0.83rem; color: var(--muted); }
+
+.formation-list { display: grid; gap: 1rem; }
+.cert-open-card {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+.cert-open-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
 .certification-grid { margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
 .cert-card {
   background: var(--surface);
@@ -595,14 +613,27 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
   <div class="container">
     <div class="tag">Formation</div>
     <h2 class="section-title">Diplômes & Certifications</h2>
-    <div class="card fade-up">
-      <div class="form-card">
-        <span class="form-icon">🎓</span>
-        <div>
-          <div class="form-title">BTS SIO — Première année en cours</div>
-          <div class="form-school">Institut Limayrac, Toulouse</div>
-          <p class="form-desc">Option SISR (Solutions d'Infrastructure, Systèmes et Réseaux). Formation axée sur l'administration réseau, la cybersécurité et la gestion des systèmes informatiques.</p>
+    <div class="formation-list">
+      <div class="card fade-up">
+        <div class="form-card">
+          <span class="form-icon">🎓</span>
+          <div>
+            <div class="form-title">BTS SIO SISR — Première année en cours</div>
+            <div class="form-school">Institut Limayrac, Toulouse</div>
+            <p class="form-desc">Option SISR (Solutions d'Infrastructure, Systèmes et Réseaux). Formation axée sur l'administration réseau, la cybersécurité et la gestion des systèmes informatiques.</p>
+          </div>
         </div>
+      </div>
+
+      <div class="card fade-up">
+        <button id="cert-open-btn" class="form-card cert-open-card" type="button">
+          <span class="form-icon">🛡️</span>
+          <div>
+            <div class="form-title">Certification SecNumacadémie</div>
+            <div class="form-school">ANSSI</div>
+            <p class="form-desc">Cliquez pour afficher l'attestation de suivi.</p>
+          </div>
+        </button>
       </div>
     </div>
 
@@ -619,11 +650,10 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
   <div class="cert-modal-content">
     <button id="cert-close-btn" class="cert-modal-close" type="button" aria-label="Fermer">×</button>
     <!-- Placez ici votre image de certification -->
+    <img src="./certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
 codex/add-certification-module-to-html-zqwl81
     <img src="./certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
-
     <img src="images/certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
-
   </div>
 </div>
 
