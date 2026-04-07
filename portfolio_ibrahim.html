@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ibrahim Abdelaziz — Technicien Support SI</title>
+
+<!--
+  ================================================================
+  POLICES GOOGLE FONTS
+  - "Plus Jakarta Sans" : police principale, moderne et très lisible
+  - "JetBrains Mono"    : police monospace pour les étiquettes/codes
+  ================================================================
+-->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================================================================
+   1. VARIABLES CSS — LE "PANNEAU DE CONTRÔLE" DU DESIGN
+   Modifiez ces valeurs pour changer tout le site d'un coup.
+================================================================ */
+:root {
+  --bg:       #080c14;
+  --surface:  #0f1623;
+  --border:   #1e2d45;
+  --accent:   #3b82f6;
+  --accent2:  #06b6d4;
+  --green:    #10b981;
+  --text:     #e2e8f0;
+  --muted:    #64748b;
+  --font-main: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius: 14px;
+  --gap:    1.5rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  background: rgba(59, 130, 246, 0.08);
+  border-radius: 4px;
+  padding: 3px 10px;
+  margin-bottom: 0.7rem;
+}
+
+h2.section-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.8rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.card:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.1);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.55s ease both; }
+.fade-up:nth-child(1) { animation-delay: 0.05s; }
+.fade-up:nth-child(2) { animation-delay: 0.13s; }
+.fade-up:nth-child(3) { animation-delay: 0.21s; }
+.fade-up:nth-child(4) { animation-delay: 0.29s; }
+.fade-up:nth-child(5) { animation-delay: 0.37s; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(8, 12, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+nav .container {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 1rem; padding-bottom: 1rem;
+}
+.nav-logo { font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent); }
+.nav-links { display: flex; gap: 1.6rem; list-style: none; }
+.nav-links a { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+
+/* HERO */
+#hero { padding: 7rem 0 5rem; position: relative; }
+#hero::after {
+  content: '';
+  position: absolute; top: 0; left: 40%; transform: translateX(-50%);
+  width: 700px; height: 350px;
+  background: radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono); font-size: 0.78rem;
+  color: var(--green); letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block; width: 8px; height: 8px;
+  background: var(--green); border-radius: 50%;
+  animation: blink 1.4s infinite;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+.hero-name {
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  font-weight: 800; line-height: 1.05;
+  letter-spacing: -0.03em; margin-bottom: 0.6rem;
+}
+.hero-name .highlight {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-role { font-size: 1.05rem; color: var(--muted); font-weight: 500; margin-bottom: 2rem; }
+.hero-contact { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; }
+.contact-item { display: flex; align-items: center; gap: 0.45rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+.contact-item .icon { color: var(--accent); font-style: normal; }
+.hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.btn {
+  font-family: var(--font-mono); font-size: 0.78rem;
+  padding: 0.75rem 1.5rem; border-radius: 10px;
+  text-decoration: none; transition: all 0.2s;
+  cursor: pointer; border: none;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.btn-primary { background: var(--accent); color: #fff; font-weight: 600; }
+.btn-primary:hover { background: #2563eb; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.35); }
+.btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+section { padding: 5rem 0; }
+section + section { border-top: 1px solid var(--border); }
+
+/* À PROPOS */
+#about .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+@media (max-width: 620px) { #about .about-grid { grid-template-columns: 1fr; } }
+.about-text { color: var(--muted); font-size: 0.97rem; }
+.lang-list  { display: flex; gap: 0.8rem; margin-top: 1rem; flex-wrap: wrap; }
+.lang-badge { padding: 0.4rem 1rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.82rem; color: var(--muted); font-family: var(--font-mono); }
+
+/* COMPÉTENCES STATIQUES */
+#skills .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.skill-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.2rem; transition: border-color 0.2s, transform 0.2s; }
+.skill-item:hover { border-color: rgba(59,130,246,0.5); transform: translateY(-2px); }
+.skill-name { font-size: 0.84rem; font-weight: 600; margin-bottom: 0.6rem; }
+.skill-level-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); float: right; }
+.skill-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.skill-bar-fill {
+  height: 100%; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  width: var(--w, 50%);
+  transform: scaleX(0); transform-origin: left;
+  animation: barFill 0.7s ease forwards;
+  animation-play-state: paused;
+}
+@keyframes barFill { to { transform: scaleX(1); } }
+
+/* ================================================================
+   SECTION COMPÉTENCES MODULABLES
+================================================================ */
+#skills-editor { background: rgba(59, 130, 246, 0.03); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+#custom-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  min-height: 60px;
+}
+
+.custom-skill-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.1rem 1.2rem;
+  position: relative; transition: border-color 0.2s;
+}
+.custom-skill-card:hover { border-color: rgba(59,130,246,0.4); }
+
+/* Bouton supprimer (×) */
+.btn-delete {
+  position: absolute; top: 0.6rem; right: 0.6rem;
+  background: rgba(239,68,68,0.12); border: none; color: #f87171;
+  border-radius: 6px; width: 26px; height: 26px; font-size: 0.9rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.btn-delete:hover { background: rgba(239,68,68,0.28); }
+
+/* Bouton modifier (crayon) */
+.btn-edit {
+  position: absolute; top: 0.6rem; right: 2.2rem;
+  background: rgba(59,130,246,0.1); border: none; color: var(--accent);
+  border-radius: 6px; width: 26px; height: 26px; font-size: 0.85rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.btn-edit:hover { background: rgba(59,130,246,0.25); }
+
+.custom-skill-name     { font-size: 0.87rem; font-weight: 600; margin-bottom: 0.4rem; padding-right: 3.5rem; }
+.custom-skill-category { font-family: var(--font-mono); font-size: 0.6rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.7rem; }
+.custom-skill-bar      { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.custom-skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width 0.4s ease; }
+
+/* Formulaire */
+.editor-form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+.editor-form h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 1.2rem; color: var(--text); }
+
+.form-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.9rem; margin-bottom: 1rem; }
+@media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+.form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+.form-group label { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+.form-group input, .form-group select {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 0.6rem 0.9rem; color: var(--text);
+  font-family: var(--font-main); font-size: 0.88rem;
+  transition: border-color 0.2s; outline: none;
+}
+.form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+.form-group input[type="range"] { padding: 0; cursor: pointer; accent-color: var(--accent); }
+
+.form-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+#level-display { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); min-width: 3rem; }
+
+.empty-state {
+  text-align: center; color: var(--muted); font-size: 0.85rem;
+  padding: 2rem; border: 2px dashed var(--border);
+  border-radius: var(--radius); grid-column: 1 / -1;
+}
+
+/* SOFT SKILLS */
+#softskills .soft-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+.soft-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; display: flex; align-items: flex-start; gap: 0.9rem; transition: border-color 0.2s, transform 0.2s; }
+.soft-item:hover { border-color: rgba(59,130,246,0.4); transform: translateY(-2px); }
+.soft-icon  { font-size: 1.4rem; flex-shrink: 0; }
+.soft-item h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.3rem; }
+.soft-item p  { font-size: 0.8rem; color: var(--muted); }
+
+/* EXPÉRIENCES */
+.exp-list { display: flex; flex-direction: column; gap: 1.1rem; }
+.exp-card { display: grid; grid-template-columns: 130px 1fr; gap: 1.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; }
+.exp-card:hover { border-color: rgba(59,130,246,0.4); transform: translateX(4px); }
+@media (max-width: 580px) { .exp-card { grid-template-columns: 1fr; } }
+.exp-date    { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); line-height: 1.5; }
+.exp-title   { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+.exp-company { font-size: 0.83rem; color: var(--muted); margin-bottom: 0.7rem; }
+.exp-desc    { font-size: 0.83rem; color: var(--muted); }
+
+/* FORMATION */
+.form-card   { display: flex; align-items: flex-start; gap: 1.3rem; }
+.form-icon   { font-size: 2rem; flex-shrink: 0; }
+.form-title  { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+.form-school { font-size: 0.83rem; color: var(--accent); margin-bottom: 0.3rem; font-family: var(--font-mono); }
+.form-desc   { font-size: 0.83rem; color: var(--muted); }
+
+/* INTÉRÊTS */
+.int-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+.interest-tag { font-family: var(--font-mono); font-size: 0.76rem; padding: 0.5rem 1.1rem; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); transition: all 0.2s; cursor: default; }
+.interest-tag:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--border); padding: 2rem 0; text-align: center; }
+footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="container">
+    <span class="nav-logo">Ibrahim_A.</span>
+    <ul class="nav-links">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#skills">Compétences</a></li>
+      <li><a href="#skills-editor">Mes blocs</a></li>
+      <li><a href="#experience">Expériences</a></li>
+      <li><a href="#formation">Formation</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-eyebrow fade-up">Disponible — Toulouse, France</p>
+    <h1 class="hero-name fade-up">
+      <span class="highlight">Ibrahim</span><br>Abdelaziz
+    </h1>
+    <p class="hero-role fade-up">Technicien Support SI · BTS SIO SISR en cours</p>
+    <div class="hero-contact fade-up">
+      <div class="contact-item"><i class="icon">📞</i><span>+33 7-81-30-26-93</span></div>
+      <div class="contact-item"><i class="icon">📍</i><span>42 Rue Henrie Lanfant, 31500</span></div>
+      <div class="contact-item"><i class="icon">✉️</i><span>ibrahim.abdelaziz@limayrac.fr</span></div>
+    </div>
+    <div class="hero-cta fade-up">
+      <a href="mailto:ibrahim.abdelaziz@limayrac.fr" class="btn btn-primary">✉ Me contacter</a>
+      <a href="#experience" class="btn btn-outline">→ Voir mes expériences</a>
+    </div>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section id="about">
+  <div class="container">
+    <div class="tag">À propos</div>
+    <h2 class="section-title">Qui suis-je ?</h2>
+    <div class="about-grid">
+      <div class="card fade-up">
+        <p class="about-text">
+          Issu d'un parcours mêlant création numérique et informatique,
+          j'ai progressivement orienté mes compétences vers la
+          <strong style="color:var(--text)">cybersécurité</strong>.
+          Mon sens du détail et ma rigueur me permettent d'aborder
+          la protection des systèmes avec une approche à la fois technique et créative.
+        </p>
+      </div>
+      <div class="card fade-up">
+        <h3 style="font-size:0.92rem;margin-bottom:0.8rem;font-weight:700;">Langues</h3>
+        <div class="lang-list">
+          <div class="lang-badge">🇫🇷 Français — Natif</div>
+          <div class="lang-badge">🇬🇧 Anglais</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPÉTENCES STATIQUES -->
+<section id="skills">
+  <div class="container">
+    <div class="tag">Technique</div>
+    <h2 class="section-title">Compétences techniques</h2>
+    <div class="skills-grid">
+
+      <!--
+        STRUCTURE D'UNE COMPÉTENCE :
+        style="--w:80%"  →  largeur de la barre (0% à 100%)
+        data-skill       →  déclenche l'animation via JS
+      -->
+
+      <div class="skill-item fade-up">
+        <div class="skill-name"><span class="skill-level-label">80%</span>Installation & Config postes</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:80%" data-skill></div></div>
+      </div>
+
+      <div class="skill-item fade-up">
+        <div class="skill-name"><span class="skill-level-label">75%</span>Réseaux TCP/IP & adressage</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:75%" data-skill></div></div>
+      </div>
+
+      <div class="skill-item fade-up">
+        <div class="skill-name"><span class="skill-level-label">65%</span>DNS / DHCP / Active Directory</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:65%" data-skill></div></div>
+      </div>
+
+      <div class="skill-item fade-up">
+        <div class="skill-name"><span class="skill-level-label">60%</span>Sécurisation réseau local</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:60%" data-skill></div></div>
+      </div>
+
+      <div class="skill-item fade-up">
+        <div class="skill-name"><span class="skill-level-label">70%</span>Surveillance & maintenance</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:70%" data-skill></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION COMPÉTENCES MODULABLES
+     L'utilisateur peut ajouter, modifier et supprimer des blocs
+     via le formulaire — sans toucher au code HTML.
+================================================================ -->
+<section id="skills-editor">
+  <div class="container">
+    <div class="tag">Personnalisable</div>
+    <h2 class="section-title">Mes blocs de compétences</h2>
+
+    <!--
+      ZONE D'AFFICHAGE : les cartes sont injectées ici par JavaScript.
+      Cette div reste vide jusqu'à ce que l'utilisateur soumette le formulaire.
+    -->
+    <div id="custom-skills-grid">
+      <div class="empty-state" id="empty-msg">
+        Aucune compétence ajoutée. Utilisez le formulaire ci-dessous ✨
+      </div>
+    </div>
+
+    <!--
+      FORMULAIRE D'AJOUT / MODIFICATION
+      Trois champs : Nom, Catégorie, Niveau (curseur)
+    -->
+    <div class="editor-form">
+      <h3 id="form-title">➕ Ajouter une compétence</h3>
+
+      <div class="form-grid">
+
+        <!-- Champ 1 : Nom -->
+        <div class="form-group">
+          <label for="input-name">Nom de la compétence</label>
+          <input type="text" id="input-name" placeholder="ex : Wireshark, Python, VLAN…">
+        </div>
+
+        <!-- Champ 2 : Catégorie -->
+        <div class="form-group">
+          <label for="input-category">Catégorie</label>
+          <select id="input-category">
+            <option value="Réseau">Réseau</option>
+            <option value="Sécurité">Sécurité</option>
+            <option value="Système">Système</option>
+            <option value="Développement">Développement</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <!-- Champ 3 : Niveau -->
+        <div class="form-group">
+          <label for="input-level">Niveau — <span id="level-display">50%</span></label>
+          <input type="range" id="input-level" min="0" max="100" value="50">
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="submitSkill()">
+          <span id="btn-label">➕ Ajouter</span>
+        </button>
+        <button class="btn btn-outline" id="btn-cancel" onclick="cancelEdit()" style="display:none;">
+          Annuler
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SOFT SKILLS -->
+<section id="softskills">
+  <div class="container">
+    <div class="tag">Savoir-être</div>
+    <h2 class="section-title">Soft Skills</h2>
+    <div class="soft-grid">
+      <div class="soft-item fade-up">
+        <span class="soft-icon">💡</span>
+        <div><h4>Esprit d'initiative</h4><p>Identifie les opportunités et agit sans supervision directe.</p></div>
+      </div>
+      <div class="soft-item fade-up">
+        <span class="soft-icon">🧩</span>
+        <div><h4>Résolution de problèmes</h4><p>Analyse rapide et solutions pragmatiques.</p></div>
+      </div>
+      <div class="soft-item fade-up">
+        <span class="soft-icon">⏱️</span>
+        <div><h4>Gestion du temps</h4><p>Planification rigoureuse pour respecter les délais.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPÉRIENCES -->
+<section id="experience">
+  <div class="container">
+    <div class="tag">Parcours</div>
+    <h2 class="section-title">Expériences</h2>
+    <div class="exp-list">
+      <div class="exp-card fade-up">
+        <div class="exp-date">En entreprise<br>BUT</div>
+        <div>
+          <div class="exp-title">Technicien Support</div>
+          <div class="exp-company">Entreprise BUT</div>
+          <p class="exp-desc">Assistance aux utilisateurs, diagnostic et résolution d'incidents, installation et configuration de postes et logiciels. Maintenance du parc informatique et support quotidien.</p>
+        </div>
+      </div>
+      <div class="exp-card fade-up">
+        <div class="exp-date">Option lycée</div>
+        <div>
+          <div class="exp-title">Développeur Jeu-Vidéo</div>
+          <div class="exp-company">Lycée — Simulateur de jeu</div>
+          <p class="exp-desc">Participation au développement d'un jeu vidéo dans un simulateur de jeu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATION -->
+<section id="formation">
+  <div class="container">
+    <div class="tag">Formation</div>
+    <h2 class="section-title">Diplômes & Certifications</h2>
+    <div class="card fade-up">
+      <div class="form-card">
+        <span class="form-icon">🎓</span>
+        <div>
+          <div class="form-title">BTS SIO — Première année en cours</div>
+          <div class="form-school">Institut Limayrac, Toulouse</div>
+          <p class="form-desc">Option SISR (Solutions d'Infrastructure, Systèmes et Réseaux). Formation axée sur l'administration réseau, la cybersécurité et la gestion des systèmes informatiques.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTÉRÊTS -->
+<section id="interests">
+  <div class="container">
+    <div class="tag">Mais aussi…</div>
+    <h2 class="section-title">Centres d'intérêt</h2>
+    <div class="int-grid">
+      <span class="interest-tag">🌐 Réseaux</span>
+      <span class="interest-tag">💻 Programmation</span>
+      <span class="interest-tag">🚀 Nouvelles technologies</span>
+      <span class="interest-tag">📱 Avancées technologiques</span>
+      <span class="interest-tag">🎬 Films d'horreurs</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>© 2025 Ibrahim Abdelaziz — Technicien Support SI</p>
+  </div>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+
+/* ----------------------------------------------------------------
+   BLOC 1 — ANIMATION DES BARRES (section statique)
+   IntersectionObserver : lance l'animation CSS uniquement
+   quand la barre entre dans le champ de vision du navigateur.
+---------------------------------------------------------------- */
+const staticBars = document.querySelectorAll('[data-skill]');
+
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running'; // démarre l'animation CSS
+      barObserver.unobserve(entry.target);               // n'observe qu'une seule fois
+    }
+  });
+}, { threshold: 0.3 });
+
+staticBars.forEach(bar => barObserver.observe(bar));
+
+
+/* ----------------------------------------------------------------
+   BLOC 2 — GESTION DES COMPÉTENCES MODULABLES
+---------------------------------------------------------------- */
+
+// Tableau qui stocke les objets compétence : { id, name, category, level }
+let customSkills = [];
+let nextId       = 1;       // identifiant auto-incrémenté
+let editingId    = null;    // null = mode ajout, sinon = mode modif
+
+// Références aux éléments du DOM
+const inputName     = document.getElementById('input-name');
+const inputCategory = document.getElementById('input-category');
+const inputLevel    = document.getElementById('input-level');
+const levelDisplay  = document.getElementById('level-display');
+const btnLabel      = document.getElementById('btn-label');
+const btnCancel     = document.getElementById('btn-cancel');
+const formTitle     = document.getElementById('form-title');
+const grid          = document.getElementById('custom-skills-grid');
+
+// Met à jour l'affichage du % en temps réel quand on bouge le curseur
+inputLevel.addEventListener('input', () => {
+  levelDisplay.textContent = inputLevel.value + '%';
+});
+
+
+/* ---- submitSkill() : Ajouter ou modifier une compétence ---- */
+function submitSkill() {
+  const name     = inputName.value.trim();
+  const category = inputCategory.value;
+  const level    = parseInt(inputLevel.value);
+
+  // Validation : nom obligatoire
+  if (!name) {
+    inputName.focus();
+    inputName.style.borderColor = '#f87171';
+    setTimeout(() => inputName.style.borderColor = '', 1200);
+    return;
+  }
+
+  if (editingId !== null) {
+    // MODE MODIFICATION : met à jour l'objet existant dans le tableau
+    const skill = customSkills.find(s => s.id === editingId);
+    skill.name = name; skill.category = category; skill.level = level;
+  } else {
+    // MODE AJOUT : crée un nouvel objet et l'ajoute au tableau
+    customSkills.push({ id: nextId++, name, category, level });
+  }
+
+  resetForm();
+  renderGrid();
+}
+
+
+/* ---- renderGrid() : Redessine toutes les cartes ---- */
+function renderGrid() {
+  grid.innerHTML = '';
+
+  // Si le tableau est vide → message d'état vide
+  if (customSkills.length === 0) {
+    grid.innerHTML = '<div class="empty-state">Aucune compétence ajoutée. Utilisez le formulaire ci-dessous ✨</div>';
+    return;
+  }
+
+  // Crée une carte pour chaque compétence du tableau
+  customSkills.forEach(skill => {
+    const card = document.createElement('div');
+    card.className = 'custom-skill-card fade-up';
+    card.innerHTML = `
+      <button class="btn-edit"   title="Modifier"   onclick="startEdit(${skill.id})">✏</button>
+      <button class="btn-delete" title="Supprimer"  onclick="deleteSkill(${skill.id})">×</button>
+      <div class="custom-skill-category">${skill.category}</div>
+      <div class="custom-skill-name">${skill.name}</div>
+      <div class="custom-skill-bar">
+        <div class="custom-skill-bar-fill" style="width:${skill.level}%"></div>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);margin-top:4px;">${skill.level}%</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+
+/* ---- deleteSkill(id) : Supprime la compétence avec cet id ---- */
+function deleteSkill(id) {
+  customSkills = customSkills.filter(s => s.id !== id); // retire l'objet du tableau
+  renderGrid();
+}
+
+
+/* ---- startEdit(id) : Pré-remplit le formulaire pour modifier ---- */
+function startEdit(id) {
+  const skill = customSkills.find(s => s.id === id);
+  if (!skill) return;
+
+  editingId = id;
+  inputName.value          = skill.name;
+  inputCategory.value      = skill.category;
+  inputLevel.value         = skill.level;
+  levelDisplay.textContent = skill.level + '%';
+  formTitle.textContent    = '✏ Modifier la compétence';
+  btnLabel.textContent     = 'Enregistrer';
+  btnCancel.style.display  = 'inline-flex';
+
+  document.querySelector('.editor-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  inputName.focus();
+}
+
+
+/* ---- cancelEdit() : Annule la modification en cours ---- */
+function cancelEdit() {
+  editingId = null;
+  resetForm();
+}
+
+
+/* ---- resetForm() : Vide et réinitialise le formulaire ---- */
+function resetForm() {
+  inputName.value          = '';
+  inputCategory.value      = 'Réseau';
+  inputLevel.value         = 50;
+  levelDisplay.textContent = '50%';
+  formTitle.textContent    = '➕ Ajouter une compétence';
+  btnLabel.textContent     = '➕ Ajouter';
+  btnCancel.style.display  = 'none';
+  editingId                = null;
+}
+
+</script>
+</body>
+</html>
