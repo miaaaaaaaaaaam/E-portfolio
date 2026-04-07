@@ -301,6 +301,7 @@ section + section { border-top: 1px solid var(--border); }
 .form-title  { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
 .form-school { font-size: 0.83rem; color: var(--accent); margin-bottom: 0.3rem; font-family: var(--font-mono); }
 .form-desc   { font-size: 0.83rem; color: var(--muted); }
+
 .formation-list { display: grid; gap: 1rem; }
 .cert-open-card {
   width: 100%;
@@ -317,6 +318,25 @@ section + section { border-top: 1px solid var(--border); }
   outline-offset: 4px;
   border-radius: 8px;
 }
+
+.certification-grid { margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+.cert-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.cert-card:hover {
+  border-color: rgba(59,130,246,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59,130,246,0.12);
+}
+.cert-card-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+.cert-card-meta { font-size: 0.75rem; color: var(--muted); font-family: var(--font-mono); }
+
 /* Fenêtre de prévisualisation de certification */
 .cert-modal {
   position: fixed;
@@ -616,6 +636,13 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
         </button>
       </div>
     </div>
+
+    <div class="certification-grid">
+      <button id="cert-open-btn" class="cert-card fade-up" type="button">
+        <div class="cert-card-title">🛡️ Certification SecNumacadémie</div>
+        <div class="cert-card-meta">Cliquez pour afficher l'attestation</div>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -624,6 +651,9 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
     <button id="cert-close-btn" class="cert-modal-close" type="button" aria-label="Fermer">×</button>
     <!-- Placez ici votre image de certification -->
     <img src="./certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
+codex/add-certification-module-to-html-zqwl81
+    <img src="./certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
+    <img src="images/certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
   </div>
 </div>
 
@@ -732,7 +762,7 @@ function renderGrid() {
 
   // Si le tableau est vide → message d'état vide
   if (customSkills.length === 0) {
-    grid.innerHTML = '<div class="empty-state">Aucune compétence ajoutée. Utilisez le formulaire ci-dessous ✨</div>';
+    grid.innerHTML = '<div class="empty-state">Aucune compétence ajoutée. Utilisez le formulaire ci-dessous </div>';
     return;
   }
 
@@ -794,8 +824,8 @@ function resetForm() {
   inputCategory.value      = 'Réseau';
   inputLevel.value         = 50;
   levelDisplay.textContent = '50%';
-  formTitle.textContent    = '➕ Ajouter une compétence';
-  btnLabel.textContent     = '➕ Ajouter';
+  formTitle.textContent    = ' Ajouter une compétence';
+  btnLabel.textContent     = ' Ajouter';
   btnCancel.style.display  = 'none';
   editingId                = null;
 }
