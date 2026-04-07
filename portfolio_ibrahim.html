@@ -619,7 +619,11 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
   <div class="cert-modal-content">
     <button id="cert-close-btn" class="cert-modal-close" type="button" aria-label="Fermer">×</button>
     <!-- Placez ici votre image de certification -->
+codex/add-certification-module-to-html-zqwl81
+    <img src="./certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
+
     <img src="images/certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
+
   </div>
 </div>
 
@@ -728,7 +732,7 @@ function renderGrid() {
 
   // Si le tableau est vide → message d'état vide
   if (customSkills.length === 0) {
-    grid.innerHTML = '<div class="empty-state">Aucune compétence ajoutée. Utilisez le formulaire ci-dessous ✨</div>';
+    grid.innerHTML = '<div class="empty-state">Aucune compétence ajoutée. Utilisez le formulaire ci-dessous </div>';
     return;
   }
 
@@ -790,8 +794,8 @@ function resetForm() {
   inputCategory.value      = 'Réseau';
   inputLevel.value         = 50;
   levelDisplay.textContent = '50%';
-  formTitle.textContent    = '➕ Ajouter une compétence';
-  btnLabel.textContent     = '➕ Ajouter';
+  formTitle.textContent    = ' Ajouter une compétence';
+  btnLabel.textContent     = ' Ajouter';
   btnCancel.style.display  = 'none';
   editingId                = null;
 }
