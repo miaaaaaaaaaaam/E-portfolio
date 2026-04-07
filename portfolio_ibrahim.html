@@ -301,6 +301,61 @@ section + section { border-top: 1px solid var(--border); }
 .form-title  { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
 .form-school { font-size: 0.83rem; color: var(--accent); margin-bottom: 0.3rem; font-family: var(--font-mono); }
 .form-desc   { font-size: 0.83rem; color: var(--muted); }
+.formation-list { display: grid; gap: 1rem; }
+.cert-open-card {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+.cert-open-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+/* Fenêtre de prévisualisation de certification */
+.cert-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 8, 18, 0.84);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 1rem;
+}
+.cert-modal.open { display: flex; }
+.cert-modal-content {
+  position: relative;
+  background: #0b1322;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem;
+  width: min(950px, 100%);
+}
+.cert-modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+.cert-modal-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(8,12,20,0.9);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
 
 /* INTÉRÊTS */
 .int-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; }
@@ -343,7 +398,7 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
       <div class="contact-item"><i class="icon">✉️</i><span>ibrahim.abdelaziz@limayrac.fr</span></div>
     </div>
     <div class="hero-cta fade-up">
-      <a href="mailto:ibrahim.abdelaziz@limayrac.fr" class="btn btn-primary">✉ Me contacter</a>
+      <a href="https://www.linkedin.com/in/ibrahim-abdelaziz-4a5a1839a/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">in LinkedIn</a>
       <a href="#experience" class="btn btn-outline">→ Voir mes expériences</a>
     </div>
   </div>
@@ -538,18 +593,39 @@ footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted
   <div class="container">
     <div class="tag">Formation</div>
     <h2 class="section-title">Diplômes & Certifications</h2>
-    <div class="card fade-up">
-      <div class="form-card">
-        <span class="form-icon">🎓</span>
-        <div>
-          <div class="form-title">BTS SIO — Première année en cours</div>
-          <div class="form-school">Institut Limayrac, Toulouse</div>
-          <p class="form-desc">Option SISR (Solutions d'Infrastructure, Systèmes et Réseaux). Formation axée sur l'administration réseau, la cybersécurité et la gestion des systèmes informatiques.</p>
+    <div class="formation-list">
+      <div class="card fade-up">
+        <div class="form-card">
+          <span class="form-icon">🎓</span>
+          <div>
+            <div class="form-title">BTS SIO SISR — Première année en cours</div>
+            <div class="form-school">Institut Limayrac, Toulouse</div>
+            <p class="form-desc">Option SISR (Solutions d'Infrastructure, Systèmes et Réseaux). Formation axée sur l'administration réseau, la cybersécurité et la gestion des systèmes informatiques.</p>
+          </div>
         </div>
+      </div>
+
+      <div class="card fade-up">
+        <button id="cert-open-btn" class="form-card cert-open-card" type="button">
+          <span class="form-icon">🛡️</span>
+          <div>
+            <div class="form-title">Certification SecNumacadémie</div>
+            <div class="form-school">ANSSI</div>
+            <p class="form-desc">Cliquez pour afficher l'attestation de suivi.</p>
+          </div>
+        </button>
       </div>
     </div>
   </div>
 </section>
+
+<div id="cert-modal" class="cert-modal" aria-hidden="true">
+  <div class="cert-modal-content">
+    <button id="cert-close-btn" class="cert-modal-close" type="button" aria-label="Fermer">×</button>
+    <!-- Placez ici votre image de certification -->
+    <img src="./certification-secnumacademie.png" alt="Attestation de suivi SecNumacadémie d'Ibrahim Abdelaziz">
+  </div>
+</div>
 
 <!-- INTÉRÊTS -->
 <section id="interests">
@@ -723,6 +799,38 @@ function resetForm() {
   btnCancel.style.display  = 'none';
   editingId                = null;
 }
+
+/* ----------------------------------------------------------------
+   BLOC 3 — MODAL CERTIFICATION (version simple et facile à expliquer)
+   1) Clic sur la carte => ouverture
+   2) Clic sur le bouton ×, en dehors de l'image, ou touche Échap => fermeture
+---------------------------------------------------------------- */
+const certModal    = document.getElementById('cert-modal');
+const certOpenBtn  = document.getElementById('cert-open-btn');
+const certCloseBtn = document.getElementById('cert-close-btn');
+
+function openCertModal() {
+  certModal.classList.add('open');
+  certModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeCertModal() {
+  certModal.classList.remove('open');
+  certModal.setAttribute('aria-hidden', 'true');
+}
+
+certOpenBtn.addEventListener('click', openCertModal);
+certCloseBtn.addEventListener('click', closeCertModal);
+
+// Ferme uniquement si on clique sur le fond sombre (et non sur l'image)
+certModal.addEventListener('click', (event) => {
+  if (event.target === certModal) closeCertModal();
+});
+
+// Ferme avec la touche Escape
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeCertModal();
+});
 
 </script>
 </body>
